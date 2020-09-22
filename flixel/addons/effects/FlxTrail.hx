@@ -92,6 +92,8 @@ class FlxTrail extends FlxSpriteGroup
 	 */
 	var _spriteOrigin:FlxPoint;
 
+	var _shader:FlxShader;
+
 	/**
 	 * Creates a new FlxTrail effect for a specific FlxSprite.
 	 *
@@ -102,7 +104,8 @@ class FlxTrail extends FlxSpriteGroup
 	 * @param	Alpha		The alpha value for the very first trailsprite.
 	 * @param	Diff		How much lower the alpha of the next trailsprite is.
 	 */
-	public function new(Target:FlxSprite, ?Graphic:FlxGraphicAsset, Length:Int = 10, Delay:Int = 3, Alpha:Float = 0.4, Diff:Float = 0.05):Void
+	public function new(Target:FlxSprite, ?Graphic:FlxGraphicAsset, Length:Int = 10, Delay:Int = 3, Alpha:Float = 0.4, Diff:Float = 0.05,
+			?Shader:FlxShader):Void
 	{
 		super();
 
@@ -114,6 +117,7 @@ class FlxTrail extends FlxSpriteGroup
 		_graphic = Graphic;
 		_transp = Alpha;
 		_difference = Diff;
+		_shader = Shader;
 
 		// Create the initial trailsprites
 		increaseLength(Length);
@@ -294,6 +298,11 @@ class FlxTrail extends FlxSpriteGroup
 			{
 				trailSprite.loadGraphic(_graphic);
 			}
+			if (_shader != null)
+			{
+				trailSprite.shader = _shader;
+			}
+
 			trailSprite.exists = false;
 			add(trailSprite);
 			trailSprite.alpha = _transp;
